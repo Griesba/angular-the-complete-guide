@@ -1,5 +1,5 @@
 import {CounterService} from '../counter.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {UserService} from '../user.service';
 import {Observable} from 'rxjs';
 
@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
   styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
-  count : Observable<number>();
+  @Output() count: number;
   users: string[];
 
   constructor(private counterService: CounterService,

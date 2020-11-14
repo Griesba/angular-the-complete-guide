@@ -1,18 +1,11 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Subject} from 'rxjs/Subject';
 
-@Injectable({
-  providedIn: 'root'
-})
+
 export class CounterService {
+  counterEvent = new EventEmitter<number>();
 
   totalCount: Subject <number>();
-
-  constructor() { }
-
-  loadCounterObservable() {
-    this.totalCount.asObservable();
-  }
 
   getCount() {
     return this.totalCount;
