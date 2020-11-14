@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CounterService {
 
-  totalCount = 0;
+  totalCount: Subject <number>();
 
   constructor() { }
+
+  loadCounterObservable() {
+    this.totalCount.asObservable();
+  }
 
   getCount() {
     return this.totalCount;
