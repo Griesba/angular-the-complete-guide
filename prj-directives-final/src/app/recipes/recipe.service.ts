@@ -31,11 +31,15 @@ export class RecipeService {
   }
 
 
-  getRecipe() {
+  getRecipes() {
     return this.recipes.slice();
   }
 
   sendToShippingList(ingredients: Ingredient[]) {
     this.shoppingService.addIngredients(ingredients);
+  }
+
+  getRecipe(index: number) {
+    return this.recipes.slice()[index];
   }
 }
