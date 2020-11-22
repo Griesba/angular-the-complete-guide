@@ -4,6 +4,7 @@ import { Recipe } from '../recipe.model';
 import {RecipeService} from '../recipe.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {interval, Observable, Subscribable, Subscription} from 'rxjs';
+import {filter, map} from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-list',
@@ -39,6 +40,14 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         count++;
       }, 1100);
     });
+
+    customIntervalObserver.pipe(
+      filter( data => {
+        return data > 0; // filter  positive numbers
+      }),
+      map((data: number) => {
+      return 'Rounded ' + (data + 1); // add one to the current number
+    }));
 
     this.secondObsSubscription = customIntervalObserver.subscribe(count => {
       console.log('second obs: ' + count);
