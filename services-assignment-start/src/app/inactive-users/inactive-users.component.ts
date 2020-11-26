@@ -19,6 +19,6 @@ export class InactiveUsersComponent implements OnInit {
 
   onSetToActive(id: number) {
     this.userService.activateUser(id);
-    this.counterService.counterEvent.emit();
+    this.counterService.totalCount.next(1);
   }
 }

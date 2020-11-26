@@ -8,15 +8,7 @@ import {CounterService} from './counter.service';
   styleUrls: ['./app.component.css'],
   providers: [UserService, CounterService]
 })
-export class AppComponent implements OnInit {
-
-  constructor(private counterService: CounterService) {
-  }
-
-  ngOnInit(): void {
-    this.counterService.counterEvent.subscribe(() => this.counterService.incrementCount());
-  }
-
+export class AppComponent {
 
 
 }

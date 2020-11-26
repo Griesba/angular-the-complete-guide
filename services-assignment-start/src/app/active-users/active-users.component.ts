@@ -20,7 +20,7 @@ export class ActiveUsersComponent implements OnInit {
 
   onSetToInactive(id: number) {
     this.userService.deactivateUser(id);
-    this.counterService.counterEvent.emit();
+    this.counterService.totalCount.next(1);
   }
 
 }
