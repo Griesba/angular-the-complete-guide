@@ -8,7 +8,7 @@
             <input type="text"
                    id="username"
                    class="form-control"
-                   ngForm
+                   ngModel
                    name="username">
           </div>
           <button class="btn btn-default" type="button">Suggest an Username</button>
@@ -17,13 +17,13 @@
             <input type="email"
                    id="email"
                    class="form-control"
-                   ngForm
+                   ngModel
                    name="email">
           </div>
         </div>
         <div class="form-group">
           <label for="secret">Secret Questions</label>
-          <select id="secret" class="form-control" ngForm name="secret">
+          <select id="secret" class="form-control" ngModel name="secret">
             <option value="pet">Your first Pet?</option>
             <option value="teacher">Your first teacher?</option>
           </select>
