@@ -15,6 +15,20 @@ export class AppComponent {
 
   suggestUserName() {
     const suggestedName = 'Superuser';
+    this.formElement.form.patchValue({
+      userData: {
+        username: suggestedName
+      }
+    });
+
+    // the drawback of this method is that il will reset the entire form
+/*    this.formElement.setValue({
+      userData: {
+        username: suggestedName,
+        email: ''
+      },
+      secret: ''
+    });*/
   }
 
 /*  onSubmit(form: HTMLFormElement) {
