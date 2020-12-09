@@ -68,11 +68,15 @@
   <div class="row">
     <form (ngSubmit)="onSubmitLogin()" #loginFormElement="ngForm">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="emailLogin">Email</label>
         <input
           id="emailLogin"
-          name="email"
+          name="emailLogin"
+          #emailLogin="ngModel"
+          ngModel
           required email>
+          <span class="help-block" *ngIf="!emailLogin.valid && emailLogin.touched">Please enter a valid email</span>
+
       </div>
 
       <div class="form-group">
@@ -95,7 +99,11 @@
         </select>
       </div>
 
+<<<<<<< 85958485990e47039622bfe2032cf6a0f5b92aad
       <button type="submit" class="btn btn-primary" [disabled]="!loginFormElement.valid">Submit</button>
+=======
+      <button type="submit" class="btn btn-primary" [disabled]="!loginFormElement.valid && loginFormElement.touched">Submit</button>
+>>>>>>> Practicing template-driven form closes #16
     </form>
   </div>
 </div>
