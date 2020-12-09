@@ -9,9 +9,20 @@ import {NgForm} from '@angular/forms';
 export class AppComponent {
 
   @ViewChild('formElement') formElement: NgForm;
+  @ViewChild('loginFormElement') loginFormElement: NgForm;
   defaultQuestion = 'pet';
   yourResponse: '';
   gender = ['male', 'female'];
+  cities = ['paris', 'istanbul', 'tokyo'];
+  selectedCity = 'tokyo';
+  user = {
+    username: '',
+    email: '',
+    secret: '',
+    response: '',
+    gender: ''
+  };
+  submitted = false;
 
   suggestUserName() {
     const suggestedName = 'Superuser';
@@ -36,6 +47,21 @@ export class AppComponent {
   }*/
 
   onSubmit() {
-    console.log(this.formElement)
+    console.log(this.formElement);
+    this.submitted = true;
+    this.user.username = this.formElement.value.userData.username;
+    this.user.email = this.formElement.value.userData.email;
+    this.user.secret = this.formElement.value.secret;
+    this.user.response = this.formElement.value.questionAnswer;
+    this.user.gender = this.formElement.value.gender;
+  }
+
+  onReset() {
+    this.formElement.reset();
+  }
+
+  onSubmitLogin() {
+    console.log(this.loginFormElement.value);
+
   }
 }

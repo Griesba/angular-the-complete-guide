@@ -45,7 +45,57 @@
           <label>{{gender}}</label>
         </div>
         <button class="btn btn-primary" type="submit" [disabled]="!formElement.valid">Submit</button>
+        <button class="btn btn-secondary" type="button" (click)="onReset()">Reset</button>
       </form>
     </div>
+    <hr>
+    <div class="row" *ngIf="submitted">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <h3>Your data</h3>
+        <ul>
+          <li>Username: {{user.username}}</li>
+          <li>Mail: {{user.email}}</li>
+          <li>Secret question: {{user.secret}}</li>
+          <li>Response: {{user.response}}</li>
+          <li>Gender: {{user.gender}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h3>Login form</h3>
+  <div class="row">
+    <form (ngSubmit)="onSubmitLogin()" #loginFormElement="ngForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          id="emailLogin"
+          name="email"
+          required email>
+      </div>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="usernameLogin"
+          ngModel name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" ngModel name="password" minlength="5">
+      </div>
+
+
+      <div class="form-group">
+        <label>City</label>
+        <select [ngModel]="selectedCity" name="city">
+          <option *ngFor="let city of cities" [value]="city"> {{city}}</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="!loginFormElement.valid">Submit</button>
+    </form>
   </div>
 </div>
