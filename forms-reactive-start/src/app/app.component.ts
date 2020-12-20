@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { CustomValidator } from './custom-validator';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   genders = ['male', 'female'];
+  projectStatus = ['Stable', 'Critical', 'Finished'];
   signUpForm: FormGroup;
   forbiddenUsername = ['Anna', 'Maria', 'Tokyo'];
 
@@ -18,8 +20,31 @@ export class AppComponent implements OnInit {
         'username': new FormControl(null, [Validators.required, this.forbiddenUsernameController.bind(this)]),
         'email': new FormControl(null, [Validators.required, Validators.email], this.asynchEmailValidator)
       }),
+      'projectName': new FormControl(null, [Validators.required], CustomValidator.asyncForbiddenProjecName),
+      'projectStatus': new FormControl('Stable'),
       'gender': new FormControl('male'),
       'hobbies': new FormArray([])
+    });
+/*     this.signUpForm.valueChanges.subscribe(
+      (value) => console.log(value)
+    );
+    this.signUpForm.statusChanges.subscribe(
+      (status) => console.log('form status ' + status)
+    ); */
+    this.signUpForm.setValue({
+      'userData': {
+        'username': 'Aligatore',
+        'email': 'addresse@email.com'
+      },
+      'projectName': 'Tatiana',
+      'projectStatus': 'Critical',
+      'gender' : 'male',
+      'hobbies': []
+    });
+    this.signUpForm.patchValue({
+      'userData': {
+        'username': 'Max'
+      },
     });
   }
 
@@ -60,5 +85,13 @@ export class AppComponent implements OnInit {
     });
     return prom;
   }
+
+  forbiddenProjecNameValidator (control: FormControl): {[s: string]: boolean} {
+    if (control.value === 'test') {
+      return {'projectNameIsForbidden': true};
+    }
+    return null;
+  }
+
 
 }

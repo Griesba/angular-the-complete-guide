@@ -25,13 +25,26 @@
               <span *ngIf="!signUpForm.get('userData.email').valid && signUpForm.get('userData.email').touched" class="help-block">Please enter valid email</span>
           </div>
         </div>
-        <div class="radio" *ngFor="let gender of genders">
-          <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
-          </label>
+        <div class="form-group">
+          <label>Gender</label>
+          <div class="radio" *ngFor="let gender of genders">
+            <label>
+              <input
+                type="radio"
+                formControlName="gender"
+                [value]="gender">{{ gender }}
+            </label>
+          </div>
+        </div>        
+        <div class="form-group">
+          <label>Project name</label>
+          <input class="form-control" type="text" name="projectName" formControlName="projectName">
+        </div>
+        <div class="select">
+          <label>Project status</label>
+          <select class="form-control" name="projectStatus" formControlName="projectStatus">
+            <option *ngFor="let status of projectStatus" [value]="status">{{status}}</option>
+          </select>
         </div>
         <div formArrayName="hobbies">
           <h4> My Hobbies</h4>
