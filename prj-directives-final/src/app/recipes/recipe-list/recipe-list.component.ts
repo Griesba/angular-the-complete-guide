@@ -13,8 +13,8 @@ import {filter, map} from 'rxjs/operators';
 })
 export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
-  private firstObsSubscription: Subscription;
-  private secondObsSubscription: Subscription;
+  // private firstObsSubscription: Subscription;
+  // private secondObsSubscription: Subscription;
 
   constructor(private recipeService: RecipeService,
               private router: Router,
@@ -22,11 +22,11 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
-    this.firstObsSubscription = interval(1000).subscribe(counter => {
+/*     this.firstObsSubscription = interval(1000).subscribe(counter => {
       console.log('firstObs ' + counter);
-    });
+    }); */
 
-    const customIntervalObserver = new Observable((observer) => {
+/*     const customIntervalObserver = new Observable((observer) => {
       let count = 0;
       setInterval(() => {
         observer.next(count);
@@ -39,24 +39,24 @@ export class RecipeListComponent implements OnInit, OnDestroy {
         }
         count++;
       }, 1100);
-    });
+    }); */
 
-    customIntervalObserver.pipe(
+/*     customIntervalObserver.pipe(
       filter( data => {
         return data > 0; // filter  positive numbers
       }),
       map((data: number) => {
       return 'Rounded ' + (data + 1); // add one to the current number
-    }));
+    })); */
 
-    this.secondObsSubscription = customIntervalObserver.subscribe(count => {
+/*     this.secondObsSubscription = customIntervalObserver.subscribe(count => {
       console.log('second obs: ' + count);
     }, error => {
     console.log(error);
     alert(error.message);
     }, () => {
       console.log('observer completed!');
-    });
+    }); */
   }
 
   onNewRecipe () {
@@ -64,8 +64,8 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.firstObsSubscription.unsubscribe();
-    this.secondObsSubscription.unsubscribe();
+/*     this.firstObsSubscription.unsubscribe();
+    this.secondObsSubscription.unsubscribe(); */
   }
 
 }
