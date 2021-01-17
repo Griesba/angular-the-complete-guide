@@ -15,6 +15,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[];
   // private firstObsSubscription: Subscription;
   // private secondObsSubscription: Subscription;
+  private recipeChangedSubscription: Subscription;
 
   constructor(private recipeService: RecipeService,
               private router: Router,
@@ -22,7 +23,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
-    this.recipeService.recipeChanged.subscribe((recipes: Recipe[]) => {
+    this.recipeChangedSubscription = this.recipeService.recipeChanged.subscribe((recipes: Recipe[]) => {
       this.recipes = recipes;
     });
 /*     this.firstObsSubscription = interval(1000).subscribe(counter => {
@@ -67,6 +68,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.recipeChangedSubscription.unsubscribe();
 /*     this.firstObsSubscription.unsubscribe();
     this.secondObsSubscription.unsubscribe(); */
   }
