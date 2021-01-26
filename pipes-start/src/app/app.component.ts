@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
