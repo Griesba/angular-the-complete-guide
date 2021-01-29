@@ -20,7 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.errorSubscription = this.postService.error.subscribe(errorMsg => {
-      this.errorMessage = errorMsg.message;
+      this.errorMessage = errorMsg;
     })
     this.onFetchPosts();
   }
