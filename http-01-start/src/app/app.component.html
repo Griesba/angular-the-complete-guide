@@ -58,7 +58,12 @@
           <span>{{post.content}}</span>
         </li>
       </ul>
-      <p *ngIf="isFetching == true">Loading</p>
+      <p *ngIf="isFetching == true && !errorMessage">Loading ...</p>
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        <h3>Fetching post failed</h3>
+        <p>{{errorMessage}}</p>
+        <button type="button" (click)="onHandleError()">OK</button>
+      </div>
     </div>
   </div>
 </div>

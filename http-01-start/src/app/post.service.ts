@@ -1,16 +1,18 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {PostModel} from './post.model';
-import {map} from 'rxjs/operators';
-import {Observable, Subscription} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {Observable, Subject, Subscription, throwError} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class PostService {
+  urlPost = 'https://syvie-95ede.firebaseio.com/post.json';
+  error = new Subject<string>();
   constructor(private http: HttpClient){}
 
   createAndPost(postData: PostModel): void {
     this.http.post< {[key: string]: PostModel}>('https://syvie-95ede.firebaseio.com/post.json', postData)
-      .subscribe(result => console.log(result));
+      .subscribe(result => console.log(result), error => this.error.next(error));
   }
 
   fetchPost(): Observable<PostModel[]> {
@@ -23,6 +25,12 @@ export class PostService {
           }
         }
         return postsArray;
+      }), catchError(err => {
+        return throwError(err);
       }));
+  }
+
+  clearPost() {
+    return this.http.delete(this.urlPost);
   }
 }
