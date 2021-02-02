@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {catchError} from 'rxjs/operators';
-import {throwError} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {Subject, throwError} from 'rxjs';
+import {User} from './user.model';
 
 export interface AuthResponseData {
   idToken: string;
@@ -14,6 +15,8 @@ export interface AuthResponseData {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  user = new Subject<User>();
+
   constructor(private http: HttpClient) {
   }
 
@@ -25,7 +28,12 @@ export class AuthService {
 
   logIn(email: string, password: string) {
     return this.http.post<AuthResponseData>(environment.signInAuthApiUrl, {email: email, password: password})
-      .pipe(catchError(this.handelError));
+      .pipe(
+        catchError(this.handelError),
+        tap(respData => {// tap operator process data without modification on it
+          // given that respData.expiresIn is a string, we can convert is to double like this +respData.expiresIn
+          this.handleAuthentication(respData.email, respData.localId, respData.idToken, +respData.expiresIn);
+        }));
   }
 
   private handelError(errResp: HttpErrorResponse) {
@@ -41,5 +49,12 @@ export class AuthService {
       case 'USER_DISABLED': errorMessage = 'The user account has been disabled by an administrator.'; break;
     }
     return throwError(errorMessage);
+  }
+
+  private handleAuthentication (email: string, id: string, idToken: string, expiresIn: number) {
+    // expiresIn is in second, while Date().getTime() is in millisecond, that is why we need to times by 1000
+    const tokenExpirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    const  newUser = new User(email, id, idToken, tokenExpirationDate);
+    this.user.next(newUser);
   }
 }
