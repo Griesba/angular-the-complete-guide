@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {catchError, tap} from 'rxjs/operators';
-import {BehaviorSubject, Subject, throwError} from 'rxjs';
+import {BehaviorSubject, throwError} from 'rxjs';
 import {User} from './user.model';
 import {Router} from '@angular/router';
 
@@ -12,6 +12,7 @@ export interface AuthResponseData {
   refreshToken: string;
   expiresIn: string;
   localId: string;
+  registered?: boolean;
 }
 
 @Injectable({providedIn: 'root'})
@@ -19,6 +20,7 @@ export class AuthService {
   // user = new Subject<User>();
   // with BehaviorSubject we can get access to a value publish before the subscription
   user = new BehaviorSubject<User>(null);
+  private tokenExpirationTimeout: any;
 
 
   constructor(private http: HttpClient, private router: Router) {
@@ -31,7 +33,7 @@ export class AuthService {
   }
 
   logIn(email: string, password: string) {
-    return this.http.post<AuthResponseData>(environment.signInAuthApiUrl, {email: email, password: password})
+    return this.http.post<AuthResponseData>(environment.signInAuthApiUrl, {email: email, password: password, returnSecureToken: true})
       .pipe(
         catchError(this.handelError),
         tap(respData => {// tap operator process data without modification on it
@@ -60,10 +62,43 @@ export class AuthService {
     const tokenExpirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const  newUser = new User(email, id, idToken, tokenExpirationDate);
     this.user.next(newUser);
+    this.autoLogout(expiresIn * 1000);
+    localStorage.setItem('userData', JSON.stringify(newUser));
+  }
+
+  autoLogin() {
+    const userData = localStorage.getItem('userData');
+    if (!userData) {
+      return;
+    }
+    const userDataJson: {
+      email: string;
+      id: string;
+      _token: string;
+      _tokenExpirationDate: string;
+    } = JSON.parse(userData);
+    const userLoaded = new User(userDataJson.email, userDataJson.id, userDataJson._token, new Date(userDataJson._tokenExpirationDate));
+
+    if (userLoaded.token) {
+      this.user.next(userLoaded);
+      const remainingDurationTime = new Date(userDataJson._tokenExpirationDate).getTime() - new Date().getTime();
+      this.autoLogout(remainingDurationTime);
+    }
+
   }
 
   logout() {
     this.user.next(null);
+    localStorage.removeItem('userData');
+    if (this.tokenExpirationTimeout) {
+      clearTimeout(this.tokenExpirationTimeout);
+    }
     this.router.navigate(['/auth']);
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimeout = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 }
