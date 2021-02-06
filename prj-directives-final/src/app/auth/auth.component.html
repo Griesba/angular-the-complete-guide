@@ -19,8 +19,9 @@
     <div *ngIf="isLoading" style="text-align: center">
       <app-loading-spinner></app-loading-spinner>
     </div>
-    <div *ngIf="error">
+<!--    <div *ngIf="error">
       <div class="alert alert-danger">{{error}}</div>
-    </div>
+    </div>-->
+    <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"></app-alert>
   </div>
 </div>

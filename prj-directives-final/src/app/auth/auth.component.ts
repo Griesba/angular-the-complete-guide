@@ -44,4 +44,9 @@ export class AuthComponent {
 
     ngForm.reset();
   }
+
+
+  onHandleError () {
+    this.error = null;
+  }
 }
