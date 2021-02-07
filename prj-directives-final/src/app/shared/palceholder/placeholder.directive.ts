@@ -4,6 +4,6 @@ import {Directive, ViewContainerRef} from '@angular/core';
   selector: '[appPlaceHolder]'
 })
 export class PlaceholderDirective {
-
+// used to create component dynamically
   constructor(public viewContainerRef: ViewContainerRef) {}
 }

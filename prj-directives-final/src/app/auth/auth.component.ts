@@ -59,6 +59,7 @@ export class AuthComponent  implements OnDestroy{
 
   private showErrorAlert (errMsg: string) {
     // const alertComp = new AlertComponent(); this wont work,  use component factory instead
+    // https://angular.io/guide/dynamic-component-loader
     const alertCmpFactory = this.compoFactoryResolver.resolveComponentFactory(AlertComponent);
     const  hostViewContainerRef = this.alertHost.viewContainerRef; // public attr created in the PlaceholderDirective
     hostViewContainerRef.clear(); // clear everything before rendering something new

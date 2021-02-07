@@ -23,31 +23,27 @@ import {LoadingSpinnerComponent} from './shared/loading-spinner.component';
 import {AuthentInterceptorService} from './auth/authent-interceptor.service';
 import {AlertComponent} from './shared/alert/alert.component';
 import {PlaceholderDirective} from './shared/palceholder/placeholder.directive';
+import {RecipeModule} from './recipes/recipe.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    RecipesComponent,
-    RecipeListComponent,
-    RecipeDetailComponent,
-    RecipeItemComponent,
     ShoppingListComponent,
     ShoppingEditComponent,
     DropdownDirective,
-    RecipeStartComponent,
-    RecipeEditComponent,
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
     PlaceholderDirective
   ],
   imports: [
-    BrowserModule,
+    BrowserModule, // BrowserModule is used only once, in other module use CommonModule
     FormsModule,
     AppRouterModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    RecipeModule
   ],
   providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
   bootstrap: [AppComponent],
