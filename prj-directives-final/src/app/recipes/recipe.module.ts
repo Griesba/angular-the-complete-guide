@@ -10,6 +10,7 @@ import {RecipeEditComponent} from './recipe-edit/recipe-edit.component';
 import {NgModule} from '@angular/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {RecipeRouterModule} from './recipe-router.module';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,8 +21,9 @@ import {RecipeRouterModule} from './recipe-router.module';
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  imports: [RouterModule,
-    CommonModule, // unlock ngIf , ngFor...
+  imports: [
+    RouterModule,
+    SharedModule,
     ReactiveFormsModule,
     RecipeRouterModule],
   exports: [
