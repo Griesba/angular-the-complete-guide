@@ -20,7 +20,10 @@ import {RecipeRouterModule} from './recipe-router.module';
     RecipeStartComponent,
     RecipeEditComponent,
   ],
-  imports: [RouterModule, CommonModule, ReactiveFormsModule, RecipeRouterModule],
+  imports: [RouterModule,
+    CommonModule, // unlock ngIf , ngFor...
+    ReactiveFormsModule,
+    RecipeRouterModule],
   exports: [
     RecipesComponent,
     RecipeListComponent,

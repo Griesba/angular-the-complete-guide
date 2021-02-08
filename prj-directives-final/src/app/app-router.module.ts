@@ -5,7 +5,6 @@ import {AuthComponent} from './auth/auth.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
-  {path: 'shopping-list', component: ShoppingListComponent},
   {path: 'auth', component: AuthComponent}
 ];
 // RouterModule.forRoot(routes) is used only once, dont repeat it on other module. You would be using RouterModule.forChild instead
