@@ -5,7 +5,7 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthentInterceptorService} from './auth/authent-interceptor.service';
 
 
-// coreModule is to create a linear providerIn app configuration
+// coreModule is to create a linear  app component
 @NgModule({
   providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
 })

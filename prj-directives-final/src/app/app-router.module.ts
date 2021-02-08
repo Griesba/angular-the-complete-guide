@@ -4,8 +4,7 @@ import {ShoppingListComponent} from './shopping-list/shopping-list.component';
 import {AuthComponent} from './auth/auth.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/recipes', pathMatch: 'full'},
-  {path: 'auth', component: AuthComponent}
+  {path: '', redirectTo: '/recipes', pathMatch: 'full'}
 ];
 // RouterModule.forRoot(routes) is used only once, dont repeat it on other module. You would be using RouterModule.forChild instead
 @NgModule({
