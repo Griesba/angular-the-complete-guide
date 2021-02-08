@@ -14,6 +14,7 @@ import {AuthentInterceptorService} from './auth/authent-interceptor.service';
 import {RecipeModule} from './recipes/recipe.module';
 import {ShoppingListModule} from './shopping-list/shopping-list.module';
 import {SharedModule} from './shared/shared.module';
+import {CoreModule} from './core.module';
 
 @NgModule({
   declarations: [
@@ -34,9 +35,11 @@ import {SharedModule} from './shared/shared.module';
     HttpClientModule,
     RecipeModule,
     ShoppingListModule,
-    SharedModule // common component and directive are declared and exported in the SharedModule
+    SharedModule, // common component and directive are declared and exported in the SharedModule
+    CoreModule
   ],
-  providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
+  // providers are in core module. this is optional, and recommended when using service declaration and not Injectable decorator
+  // providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
   bootstrap: [AppComponent],
 /*  no need for angular 9 and higher
   entryComponents: [
