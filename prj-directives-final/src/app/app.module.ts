@@ -34,11 +34,11 @@ import {AuthModule} from './auth/auth.module';
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecipeModule,
-    ShoppingListModule,
+    // RecipeModule, now the we are using RecipeModule in lazyloading mode, we remove it here to reduce the size of the app.
+    // AuthModule, lazy loaded
+    // ShoppingListModule, lazy loaded
     SharedModule, // common component and directive are declared and exported in the SharedModule
-    CoreModule,
-    AuthModule
+    CoreModule
   ],
   // providers are in core module. this is optional, and recommended when using service declaration and not Injectable decorator
   // providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
