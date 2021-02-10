@@ -16,6 +16,7 @@ import {ShoppingListModule} from './shopping-list/shopping-list.module';
 import {SharedModule} from './shared/shared.module';
 import {CoreModule} from './core.module';
 import {AuthModule} from './auth/auth.module';
+import {LoggingService} from './logging.service';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {AuthModule} from './auth/auth.module';
   // providers are in core module. this is optional, and recommended when using service declaration and not Injectable decorator
   // providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
   bootstrap: [AppComponent],
+  providers: [LoggingService] // providing in the appModule has the same effect than using 'root' @Injectable
 /*  no need for angular 9 and higher
   entryComponents: [
     AlertComponent
