@@ -1,41 +1,26 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-**/envoroments/
-
-**/envoroments.prod.ts
-**/envoroments.ts
-
-
 # compiled output
 /dist
-*/dist
 /tmp
-*/tmp
 /out-tsc
-*/out-tsc
 # Only exists if Bazel was run
 /bazel-out
-*/bazel-out
 
 # dependencies
 /node_modules
-*/node_modules
 
 # profiling files
-chrome-profiler-events*.json
-speed-measure-plugin*.json
+chrome-profiler-events.json
+speed-measure-plugin.json
 
 # IDEs and editors
 /.idea
-*/.idea
 .project
-*.project
 .classpath
-*.classpath
 .c9/
-*.c9/
 *.launch
-*.settings/
+.settings/
 *.sublime-workspace
 
 # IDE - VSCode
@@ -51,11 +36,11 @@ speed-measure-plugin*.json
 /connect.lock
 /coverage
 /libpeerconnection.log
-*npm-debug.log
-*yarn-error.log
-*testem.log
-*/typings
+npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
 # System Files
-*.DS_Store
-*Thumbs.db
+.DS_Store
+Thumbs.db
