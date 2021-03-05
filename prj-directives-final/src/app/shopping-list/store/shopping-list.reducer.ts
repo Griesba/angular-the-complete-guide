@@ -1,5 +1,5 @@
-import {Ingredient} from '../shared/ingredient.model';
-import {Action} from '@ngrx/store';
+import {Ingredient} from '../../shared/ingredient.model';
+import * as ShoppingListActions from './shopping-list.actions';
 
 const initialState = {
   ingredients: [
@@ -10,12 +10,12 @@ const initialState = {
 
 // state default value is initialState. It all start there by default
 // state change is immutable. create new one with the copy of old state
-export function shoppingListReducer(state = initialState, action: Action) {
+export function shoppingListReducer(state = initialState, action: ShoppingListActions.AddIngredientAction) {
     switch (action.type) {
-      case 'ADD_INGREDIENT':
+      case ShoppingListActions.ADD_INGREDIENT:
         return {
           ...state,
-          ingredients: [...state.ingredients, action]
+          ingredients: [...state.ingredients, action.data]
         };
     }
 }
