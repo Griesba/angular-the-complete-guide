@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Store} from '@ngrx/store';
+import {Observable, Subscription} from 'rxjs';
 
 import { Ingredient } from '../shared/ingredient.model';
 import {ShoppingService} from './shopping.service';
-import {Subscription} from 'rxjs';
 import {LoggingService} from '../logging.service';
 
 @Component({
@@ -11,17 +12,21 @@ import {LoggingService} from '../logging.service';
   styleUrls: ['./shopping-list.component.css']
 })
 export class ShoppingListComponent implements OnInit, OnDestroy {
-  ingredients: Ingredient[] = [];
+  ingredients: Observable<{ingredients: Ingredient[]}>;
   private shopSubscription: Subscription;
 
-  constructor(private shoppingService: ShoppingService, private logging: LoggingService) { }
+  constructor(private shoppingService: ShoppingService,
+              private logging: LoggingService,
+              // shoppingList is the same present in app.module and ingredients is the same name in shopping-list.reducer
+              private mystore: Store<{shoppingList: {ingredients: Ingredient[]}}> ) { }
 
   ngOnInit() {
-    this.ingredients = this.shoppingService.getIngredients();
+    // ingredients is an observable and to resolve it we will use async to access the array of ingredient in the html
+    this.ingredients = this.mystore.select('shoppingList');
+/*    this.ingredients = this.shoppingService.getIngredients();
     this.shopSubscription = this.shoppingService.ingredientChangedEvent.subscribe((ingredients: Ingredient[]) => {
       this.ingredients = ingredients;
-    });
-    this.logging.printLog('hello from ShoppingListComponent ngOnInt');
+    });*/
   }
 
   onEditItem (index: number) {
@@ -29,7 +34,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.shopSubscription.unsubscribe();
+    // this.shopSubscription.unsubscribe();
   }
 
 }
