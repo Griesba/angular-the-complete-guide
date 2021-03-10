@@ -18,11 +18,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor(private shoppingService: ShoppingService,
               private logging: LoggingService,
               // shoppingList is the same present in app.module and ingredients is the same name in shopping-list.reducer
-              private mystore: Store<{shoppingList: {ingredients: Ingredient[]}}> ) { }
+              private store: Store<{shoppingList: {ingredients: Ingredient[]}}> ) { }
 
   ngOnInit() {
     // ingredients is an observable and to resolve it we will use async to access the array of ingredient in the html
-    this.ingredients = this.mystore.select('shoppingList');
+    this.ingredients = this.store.select('shoppingList');
 /*    this.ingredients = this.shoppingService.getIngredients();
     this.shopSubscription = this.shoppingService.ingredientChangedEvent.subscribe((ingredients: Ingredient[]) => {
       this.ingredients = ingredients;
