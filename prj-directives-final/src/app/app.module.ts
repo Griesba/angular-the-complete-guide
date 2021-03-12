@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {StoreModule} from '@ngrx/store';
 
 
 import {AppComponent} from './app.component';
@@ -18,6 +19,8 @@ import {CoreModule} from './core.module';
 import {AuthModule} from './auth/auth.module';
 import {LoggingService} from './logging.service';
 
+import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,6 +35,7 @@ import {LoggingService} from './logging.service';
   imports: [
     BrowserModule, // BrowserModule is used only once, in other module use CommonModule
     FormsModule,
+    StoreModule.forRoot({shoppingList: shoppingListReducer}), // reducer registered in the StoreModule
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,
