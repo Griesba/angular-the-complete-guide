@@ -6,6 +6,8 @@ import {Store} from '@ngrx/store';
 import {Ingredient} from '../shared/ingredient.model';
 import {ShoppingService} from '../shopping-list/shopping.service';
 import * as ShoppingListActions from '../shopping-list/store/shopping-list.actions';
+import * as fromApp from '../store/app-reducer';
+
 @Injectable() // inject ShoppingService in this service
 export class RecipeService {
   selectedRecipe = new Subject<Recipe>();
@@ -31,9 +33,9 @@ export class RecipeService {
       ])
   ];*/
 
-  constructor(private shoppingService: ShoppingService,
+  constructor(// private shoppingService: ShoppingService,
               // retrieve ingredient from rxjs store
-              private store: Store<{shoppingList: {ingredients: Ingredient[]}}>) {
+              private store: Store<fromApp.AppState>) {
   }
 
 
