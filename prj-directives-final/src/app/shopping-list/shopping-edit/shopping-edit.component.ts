@@ -39,6 +39,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
       if (stateData.editedIngredientIndex > -1) {
         this.editMode = true;
         this.editedIdem = stateData.editedIngredient;
+        this.editedItemIndex = stateData.editedIngredientIndex;
         this.shoppingListForm.setValue({
           name: this.editedIdem.name,
           amount: this.editedIdem.amount
@@ -77,6 +78,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onDelete() {
     if (this.editMode) {
       // this.shoppingService.deleteIngredient(this.editedItemIndex);
+      console.log('editedItemIndex', this.editedItemIndex);
       this.store.dispatch(new ShoppingListAction.DeleteIngredientAction(this.editedItemIndex));
       this.onClear();
     }
