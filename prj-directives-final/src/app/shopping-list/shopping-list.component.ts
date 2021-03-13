@@ -5,7 +5,7 @@ import {Observable, Subscription} from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import {ShoppingService} from './shopping.service';
 import {LoggingService} from '../logging.service';
-import * as fromShoppingList from './store/shopping-list.reducer';
+import * as fromApp from '../store/app-reducer';
 import * as ShoppingListActions from './store/shopping-list.actions';
 
 @Component({
@@ -20,7 +20,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   constructor(// private shoppingService: ShoppingService,
               private logging: LoggingService,
               // shoppingList is the same present in app.module and ingredients is the same name in shopping-list.reducer
-              private store: Store<fromShoppingList.AppState> ) { }
+              private store: Store<fromApp.AppState> ) { }
 
   ngOnInit() {
     // ingredients is an observable and to resolve it we will use async to access the array of ingredient in the html

@@ -19,7 +19,7 @@ import {CoreModule} from './core.module';
 import {AuthModule} from './auth/auth.module';
 import {LoggingService} from './logging.service';
 
-import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
+import * as fromApp from './store/app-reducer';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,7 @@ import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
     BrowserModule, // BrowserModule is used only once, in other module use CommonModule
     FormsModule,
     // registering shoppingListReducer in the StoreModule with key shoppingList
-    StoreModule.forRoot({shoppingList: shoppingListReducer}),
+    StoreModule.forRoot(fromApp.appReducer),
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,
