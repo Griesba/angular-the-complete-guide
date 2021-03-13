@@ -1,6 +1,7 @@
 import {Ingredient} from '../shared/ingredient.model';
 import {Subject} from 'rxjs';
-
+// with the introduction of NgRx,  we no longer need this service that is bases on subject
+// hence we should choose whether to use NgRx or Suject
 export class ShoppingService {
   ingredientChangedEvent = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();

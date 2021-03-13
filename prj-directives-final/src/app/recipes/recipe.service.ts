@@ -33,7 +33,7 @@ export class RecipeService {
       ])
   ];*/
 
-  constructor(private shoppingService: ShoppingService,
+  constructor(// private shoppingService: ShoppingService,
               // retrieve ingredient from rxjs store
               private store: Store<fromShoppingList.AppState>) {
   }

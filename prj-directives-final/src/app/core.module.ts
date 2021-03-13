@@ -7,6 +7,8 @@ import {AuthentInterceptorService} from './auth/authent-interceptor.service';
 
 // coreModule is to create a linear  app component
 @NgModule({
-  providers: [ShoppingService, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
+  providers: [
+    // ShoppingService, replaced by NgRx state
+    RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthentInterceptorService, multi: true}],
 })
 export class CoreModule { }
