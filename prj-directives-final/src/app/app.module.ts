@@ -35,7 +35,8 @@ import {shoppingListReducer} from './shopping-list/store/shopping-list.reducer';
   imports: [
     BrowserModule, // BrowserModule is used only once, in other module use CommonModule
     FormsModule,
-    StoreModule.forRoot({shoppingList: shoppingListReducer}), // reducer registered in the StoreModule
+    // registering shoppingListReducer in the StoreModule with key shoppingList
+    StoreModule.forRoot({shoppingList: shoppingListReducer}),
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,

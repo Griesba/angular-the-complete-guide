@@ -1,17 +1,31 @@
 import {Ingredient} from '../../shared/ingredient.model';
 import * as ShoppingListActions from './shopping-list.actions';
-import {Action} from '@ngrx/store';
 
-const initialState = {
+// this is flexible type definition
+// if we have a new info to add, we will add it as State interface attribute
+export interface State {
+  ingredients: Ingredient[];
+  editedIngredient: Ingredient;
+  editedIngredientIndex: number;
+}
+
+// describe the whole application state
+export interface AppState {
+  shoppingList: State;
+}
+
+const initialState: State = {
   ingredients: [
     new Ingredient('Apples', 5),
     new Ingredient('Tomatoes', 10),
-  ]
+  ],
+  editedIngredient: null,
+  editedIngredientIndex: -1
 };
 
 // state default value is initialState. It all start there by default
 // state change is immutable. create new one with the copy of old state
-export function shoppingListReducer(state = initialState, action: ShoppingListActions.ShoppingListActions) {
+export function shoppingListReducer(state: State = initialState, action: ShoppingListActions.ShoppingListActions) {
     switch (action.type) {
       case ShoppingListActions.ADD_INGREDIENT:
         return {
