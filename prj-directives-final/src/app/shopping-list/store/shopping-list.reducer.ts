@@ -58,6 +58,18 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
             return index !== action.data;
           })
         };
+      case ShoppingListActions.START_EDIT:
+        return {
+          ...state, // always copy the previous state if you don't want to loose it
+          editedIngredientIndex: action.data,
+          editedIngredient: {...state.ingredients[action.data]} // a copy of state.ingredients is made because it is the original source
+        };
+      case ShoppingListActions.STOP_EDIT:
+        return {
+          ...state,
+          editedIngredientIndex: -1,
+          editedIngredient: null
+        }
       default:
         return state;
     }
