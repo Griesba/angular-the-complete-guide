@@ -22,7 +22,9 @@ export class AddIngredientsActions  implements Action {
 
 export class UpdateIngredientAction {
   readonly type = UPDATE_INGREDIENT;
-  constructor(public data: {index: number, ingredient: Ingredient}) { }
+  // constructor(public data: {index: number, ingredient: Ingredient}) { }
+  // id don't need to pass the index parameter no more it is in the reducer State (editedIngredientIndex)
+  constructor(public data: Ingredient) { }
 }
 
 export class DeleteIngredientAction {

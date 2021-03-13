@@ -38,25 +38,32 @@ export function shoppingListReducer(state: State = initialState, action: Shoppin
           ingredients: [...state.ingredients, ...action.data]
         };
       case ShoppingListActions.UPDATE_INGREDIENT:
-        const ingredientToUpdate = state.ingredients[action.data.index];  // ingredient to update
+        const ingredientToUpdate = state.ingredients[state.editedIngredientIndex];  // ingredient to update
         // copy and modification of ingredient. We cannot edit ingredient as rxjs advocate immutability
         const updatedIngredient = {
           ...ingredientToUpdate,
-          ...action.data.ingredient
+          ...action.data
         };
         const updatedIngredients = [...state.ingredients];
-        updatedIngredients[action.data.index] = updatedIngredient;
+        updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
 
+        // update ingredient stop editing so we reset editedIngredientIndex and editedIngredient
         return {
           ...state,
-          ingredients: updatedIngredients
+          ingredients: updatedIngredients,
+          editedIngredientIndex: -1,
+          editedIngredient: null
         };
       case ShoppingListActions.DELETE_INGREDIENT:
+
+        // delete ingredient stop editing so we reset editedIngredientIndex and editedIngredient
         return {
           ...state,
           ingredients: state.ingredients.filter((x, index) => {
             return index !== action.data;
-          })
+          }),
+          editedIngredientIndex: -1,
+          editedIngredient: null
         };
       case ShoppingListActions.START_EDIT:
         return {
