@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {environment} from '../../environments/environment';
+import {Router} from '@angular/router';
 import {catchError, tap} from 'rxjs/operators';
 import {BehaviorSubject, throwError} from 'rxjs';
+import {Store} from '@ngrx/store';
+
+import {environment} from '../../environments/environment';
 import {User} from './user.model';
-import {Router} from '@angular/router';
+import * as fromApp from '../store/app-reducer';
+import * as fromAuthAction from '../auth/store/auth.actions';
 
 export interface AuthResponseData {
   idToken: string;
@@ -19,11 +23,11 @@ export interface AuthResponseData {
 export class AuthService {
   // user = new Subject<User>();
   // with BehaviorSubject we can get access to a value publish before the subscription
-  user = new BehaviorSubject<User>(null);
+  // user = new BehaviorSubject<User>(null);
   private tokenExpirationTimeout: any;
 
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) {
   }
 
   signUp(email: string, password: string) {
@@ -61,7 +65,8 @@ export class AuthService {
     // expiresIn is in second, while Date().getTime() is in millisecond, that is why we need to times by 1000
     const tokenExpirationDate = new Date(new Date().getTime() + expiresIn * 1000);
     const  newUser = new User(email, id, idToken, tokenExpirationDate);
-    this.user.next(newUser);
+    // this.user.next(newUser);
+    this.store.dispatch(new fromAuthAction.Login({email: email, userId: id, token: idToken, expirationDate: tokenExpirationDate}));
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(newUser));
   }
@@ -80,7 +85,13 @@ export class AuthService {
     const userLoaded = new User(userDataJson.email, userDataJson.id, userDataJson._token, new Date(userDataJson._tokenExpirationDate));
 
     if (userLoaded.token) {
-      this.user.next(userLoaded);
+      // this.user.next(userLoaded);
+      this.store.dispatch(new fromAuthAction.Login({
+        email: userDataJson.email,
+        userId: userDataJson.id,
+        token: userDataJson._token,
+        expirationDate: new Date(userDataJson._tokenExpirationDate)
+      }));
       const remainingDurationTime = new Date(userDataJson._tokenExpirationDate).getTime() - new Date().getTime();
       this.autoLogout(remainingDurationTime);
     }
@@ -88,7 +99,8 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
+    // this.user.next(null);
+    this.store.dispatch(new fromAuthAction.Logout());
     localStorage.removeItem('userData');
     if (this.tokenExpirationTimeout) {
       clearTimeout(this.tokenExpirationTimeout);
