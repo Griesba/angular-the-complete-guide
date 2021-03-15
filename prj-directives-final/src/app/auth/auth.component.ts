@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnDestroy, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
@@ -14,7 +14,7 @@ import * as ActionLogin from './store/auth.actions';
   selector: 'app-auth',
   templateUrl: './auth.component.html'
 })
-export class AuthComponent  implements OnDestroy{
+export class AuthComponent  implements OnInit, OnDestroy {
   isLoginMode = true;
   isLoading = false;
   private error: string;
@@ -25,6 +25,13 @@ export class AuthComponent  implements OnDestroy{
               private route: Router,
               private compoFactoryResolver: ComponentFactoryResolver,
               private store: Store<fromApp.AppState>) {}
+
+  ngOnInit(): void {
+    this.store.select('auth').subscribe(authState => {
+      this.isLoading = authState.loading;
+      this.error = authState.authError;
+    });
+  }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
