@@ -1,7 +1,7 @@
 import {Ingredient} from '../shared/ingredient.model';
 import {Subject} from 'rxjs';
 // with the introduction of NgRx,  we no longer need this service that is bases on subject
-// hence we should choose whether to use NgRx or Suject
+// hence we should choose whether to use NgRx or Subject
 export class ShoppingService {
   ingredientChangedEvent = new Subject<Ingredient[]>();
   startedEditing = new Subject<number>();
@@ -16,8 +16,8 @@ export class ShoppingService {
 
   addIngredient(ingredient: Ingredient) {
     this.ingredients.push(ingredient);
-    // since we are returning a copy of ingredient array, an update of the original array is not repecuted on the copy
-    // that is why we have to are using an EventEmiter that will emit changes to array copy.
+    // since we are returning a copy of ingredient array, an update of the original array has no impact on the copy
+    // that is why we have to are using an EventEmitter that will emit changes to array copy.
     // another solution is not to slice() the original array
     this.ingredientChangedEvent.next(this.ingredients.slice());
   }
