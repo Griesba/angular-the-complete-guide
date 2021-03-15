@@ -1,12 +1,13 @@
 import {Action} from '@ngrx/store';
 import {Ingredient} from '../../shared/ingredient.model';
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const ADD_INGREDIENTS = 'ADD_INGREDIENTS';
-export const UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
-export const DELETE_INGREDIENT = 'DELETE_INGREDIENT';
-export const START_EDIT = 'START_EDIT';
-export const STOP_EDIT = 'STOP_EDIT';
+// in order to make action identifier unique we precede it by the name of the feature
+export const ADD_INGREDIENT = '[Shopping list] ADD_INGREDIENT';
+export const ADD_INGREDIENTS = '[Shopping list] ADD_INGREDIENTS';
+export const UPDATE_INGREDIENT = '[Shopping list] UPDATE_INGREDIENT';
+export const DELETE_INGREDIENT = '[Shopping list] DELETE_INGREDIENT';
+export const START_EDIT = '[Shopping list] START_EDIT';
+export const STOP_EDIT = '[Shopping list] STOP_EDIT';
 
 export class AddIngredientAction  implements Action {
   readonly type = ADD_INGREDIENT;
