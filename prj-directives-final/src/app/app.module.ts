@@ -20,6 +20,8 @@ import {AuthModule} from './auth/auth.module';
 import {LoggingService} from './logging.service';
 
 import * as fromApp from './store/app-reducer';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,7 @@ import * as fromApp from './store/app-reducer';
     FormsModule,
     // registering shoppingListReducer in the StoreModule with key shoppingList
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([AuthEffects]),
     AppRouterModule,
     ReactiveFormsModule,
     HttpClientModule,

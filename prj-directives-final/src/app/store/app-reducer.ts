@@ -14,4 +14,4 @@ export const appReducer: ActionReducerMap<AppState> = {
 };
 
 
-// any action we dispatch allways reach all reducers
+// any action we dispatch always reach all reducers
