@@ -45,13 +45,14 @@ export class AuthComponent  implements OnInit, OnDestroy {
     if (!ngForm.valid) { return false; }
     const email = ngForm.value.email;
     const password = ngForm.value.password;
-    let authObs: Observable<AuthResponseData>;
+    // let authObs: Observable<AuthResponseData>;
 
     if (this.isLoginMode) {
       // authObs = this.authService.logIn(email, password);
-      this.store.dispatch(new ActionLogin.LoginStart({email: email, password: password}));
+      this.store.dispatch(new ActionLogin.AuthenticateStart({email: email, password: password}));
     } else {
-      authObs = this.authService.signUp(email, password);
+      // authObs = this.authService.signUp(email, password);
+      this.store.dispatch(new ActionLogin.SignUpSuccess({email, password}));
     }
 
 /*    authObs.subscribe(resData => {
