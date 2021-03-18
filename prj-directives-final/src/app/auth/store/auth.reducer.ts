@@ -29,6 +29,7 @@ export function authReducer(state = initialState, action: fromAuthActions.AuthAc
         loading: false
       };
     case fromAuthActions.AUTHENTICATE_START:
+    case fromAuthActions.SIGN_UP_START:
       return {
         ...state,
         authError: null,
@@ -40,6 +41,11 @@ export function authReducer(state = initialState, action: fromAuthActions.AuthAc
         user: null,
         authError: action.payload,
         loading: false
+      };
+    case fromAuthActions.CLEAR_ERROR:
+      return {
+        ...state,
+        authError: null
       };
     default:
       return state;

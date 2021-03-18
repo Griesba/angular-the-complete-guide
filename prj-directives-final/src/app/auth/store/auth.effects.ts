@@ -37,7 +37,7 @@ export class AuthEffects {
 
   @Effect()
   authSignUp = this.actions$.pipe(
-    ofType(LoginActions.SIGNUP_START),
+    ofType(LoginActions.SIGN_UP_START),
     switchMap((signUpData: LoginActions.SignUpSuccess) => {
       return this.http
         .post<AuthResponseData>(
