@@ -12,3 +12,6 @@ export const appReducer: ActionReducerMap<AppState> = {
   shoppingList: fromShoppingList.shoppingListReducer,
   auth: fromAuth.authReducer
 };
+
+
+// any action we dispatch always reach all reducers
