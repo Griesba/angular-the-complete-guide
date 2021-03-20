@@ -24,13 +24,26 @@ export class AuthService {
   // user = new Subject<User>();
   // with BehaviorSubject we can get access to a value publish before the subscription
   // user = new BehaviorSubject<User>(null);
-  private tokenExpirationTimeout: any;
+  private tokenExpirationTimer: any;
 
 
   constructor(private http: HttpClient, private router: Router, private store: Store<fromApp.AppState>) {
   }
 
-  signUp(email: string, password: string) {
+  setLogoutTimer(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.store.dispatch(new fromAuthAction.Logout());
+    }, expirationDuration);
+  }
+
+  clearLogoutTimer () {
+    if (this.tokenExpirationTimer) {
+      clearTimeout(this.tokenExpirationTimer);
+      this.tokenExpirationTimer = null;
+    }
+  }
+
+/*  signUp(email: string, password: string) {
 
     return this.http.post<AuthResponseData>(environment.signUpAuthApiUrl, {email: email, password: password, returnSecureToken: true})
       .pipe(catchError(this.handelError));
@@ -44,9 +57,9 @@ export class AuthService {
           // given that respData.expiresIn is a string, we can convert is to double like this +respData.expiresIn
           this.handleAuthentication(respData.email, respData.localId, respData.idToken, +respData.expiresIn);
         }));
-  }
+  }*/
 
-  private handelError(errResp: HttpErrorResponse) {
+/*  private handelError(errResp: HttpErrorResponse) {
     let errorMessage = 'An error occurred';
     if (!errResp.error || !errResp.error.error.message) {
       return throwError(errorMessage);
@@ -96,9 +109,9 @@ export class AuthService {
       this.autoLogout(remainingDurationTime);
     }
 
-  }
+  }*/
 
-  logout() {
+/*  logout() {
     // this.user.next(null);
     this.store.dispatch(new fromAuthAction.Logout());
     localStorage.removeItem('userData');
@@ -112,5 +125,5 @@ export class AuthService {
     this.tokenExpirationTimeout = setTimeout(() => {
       this.logout();
     }, expirationDuration);
-  }
+  }*/
 }

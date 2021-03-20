@@ -7,7 +7,7 @@ import {of, throwError} from 'rxjs';
 
 import * as LoginActions from './auth.actions';
 import {environment} from '../../../environments/environment';
-import {AuthResponseData} from '../auth.service';
+import {AuthResponseData, AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {User} from '../user.model';
 
@@ -52,6 +52,9 @@ export class AuthEffects {
             returnSecureToken: true
           })
         .pipe(
+          tap(resData => {
+            this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+          }),
           map(resData => {
             return handleAuthentication(+resData.expiresIn, resData.email, resData.localId, resData.idToken);
           }),
@@ -78,14 +81,11 @@ export class AuthEffects {
             returnSecureToken: true
           })
         .pipe(
+          tap(resData => {
+            this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+          }),
           map(resData => {
-            const tokenExpirationDate = new Date(new Date().getTime() + (+resData.expiresIn) * 1000);
-            return new LoginActions.Login({
-                email: resData.email,
-                userId: resData.localId,
-                token: resData.idToken,
-                expirationDate: tokenExpirationDate
-              });
+            return handleAuthentication(+resData.expiresIn, resData.email, resData.localId, resData.idToken);
           }),
           catchError(errResp => {
             return handleError(errResp);
@@ -111,14 +111,17 @@ export class AuthEffects {
       const userLoaded = new User(userDataJson.email, userDataJson.id, userDataJson._token, new Date(userDataJson._tokenExpirationDate));
 
       if (userLoaded.token) {
-        // this.user.next(userLoaded);
+
+        const remainingDurationTime = new Date(userDataJson._tokenExpirationDate).getTime() - new Date().getTime();
+        this.authService.setLogoutTimer(remainingDurationTime);
+
         return new LoginActions.Login({
           email: userDataJson.email,
           userId: userDataJson.id,
           token: userDataJson._token,
           expirationDate: new Date(userDataJson._tokenExpirationDate)
         });
-        /*const remainingDurationTime = new Date(userDataJson._tokenExpirationDate).getTime() - new Date().getTime();
+        /*
         this.autoLogout(remainingDurationTime);*/
       }
       return {type:  'DUMMY'}; // return empty action when there is no valid token
@@ -127,15 +130,24 @@ export class AuthEffects {
   );
 
   @Effect({dispatch: false})
-  authSuccess = this.actions$.pipe(ofType(LoginActions.AUTHENTICATE_SUCCESS), tap(() => {
-    this.router.navigate(['/']);
-  } ));
+  authSuccess = this.actions$.pipe(
+    ofType(LoginActions.AUTHENTICATE_SUCCESS),
+    tap(() => {
+      this.router.navigate(['/']);
+    }));
 
   @Effect({dispatch: false})
-  authLogout = this.actions$.pipe(ofType(LoginActions.LOGOUT), tap(() => {
-    localStorage.removeItem('userData');
-  }));
+  authLogout = this.actions$.pipe(
+    ofType(LoginActions.LOGOUT),
+    tap(() => {
+      this.authService.clearLogoutTimer();
+      localStorage.removeItem('userData');
+      this.router.navigate(['/auth']);
+    }));
 
   // note de diff between ngrx/store and ngrx/effects/action. the last one is an observable that is why we add $ sign at the end
-  constructor(private actions$: Actions, private http: HttpClient, private router: Router) {}
+  constructor(private actions$: Actions,
+              private http: HttpClient,
+              private router: Router,
+              private authService: AuthService) {}
 }
