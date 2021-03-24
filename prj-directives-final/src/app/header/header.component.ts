@@ -6,6 +6,7 @@ import {AuthService} from '../auth/auth.service';
 import {DataStorageService} from '../shared/data-storage.service';
 import * as fromApp from '../store/app-reducer';
 import * as AuthActions from '../auth/store/auth.actions';
+import * as fromRecipe from '../recipes/store/recipe.action';
 
 @Component({
   selector: 'app-header',
@@ -33,7 +34,8 @@ export class HeaderComponent implements OnInit {
   }
 
   fetchData() {
-    this.dataStorageService.fetchRecipe().subscribe();
+    // this.dataStorageService.fetchRecipe().subscribe();
+    this.store.dispatch(new fromRecipe.FetchRecipe());
   }
 
   onLogout() {

@@ -17,7 +17,7 @@ const handleAuthentication = (expiresIn: number, email: string, userId: string, 
   const  newUser = new User(email, userId, token, tokenExpirationDate);
   localStorage.setItem('userData', JSON.stringify(newUser));
 
-  return new LoginActions.Login({email, userId, token, expirationDate: tokenExpirationDate});
+  return new LoginActions.Login({email, userId, token, expirationDate: tokenExpirationDate, redirect: true});
 };
 
 const handleError = (errResp: any) => {
@@ -119,7 +119,8 @@ export class AuthEffects {
           email: userDataJson.email,
           userId: userDataJson.id,
           token: userDataJson._token,
-          expirationDate: new Date(userDataJson._tokenExpirationDate)
+          expirationDate: new Date(userDataJson._tokenExpirationDate),
+          redirect: false// id don't want to redirect when auto login
         });
         /*
         this.autoLogout(remainingDurationTime);*/
@@ -132,8 +133,10 @@ export class AuthEffects {
   @Effect({dispatch: false})
   authSuccess = this.actions$.pipe(
     ofType(LoginActions.AUTHENTICATE_SUCCESS),
-    tap(() => {
-      this.router.navigate(['/']);
+    tap((authSuccess: LoginActions.Login) => {
+      if (authSuccess.payload.redirect) {
+        this.router.navigate(['/']); // redirect only on manual login
+      }
     }));
 
   @Effect({dispatch: false})
