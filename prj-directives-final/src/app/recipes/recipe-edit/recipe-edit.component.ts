@@ -1,22 +1,26 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Store} from '@ngrx/store';
+import {map} from 'rxjs/operators';
 
 import { RecipeService } from '../recipe.service';
 import {Recipe} from '../recipe.model';
 import * as fromApp from '../../store/app-reducer';
-import {map} from 'rxjs/operators';
+import * as RecipesAction from '../store/recipe.action';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-recipe-edit',
   templateUrl: './recipe-edit.component.html',
   styleUrls: ['./recipe-edit.component.css']
 })
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   id: number;
   isEditMode = false;
   recipeForm: FormGroup;
+
+  private storeSub: Subscription;
 
   constructor(private route: ActivatedRoute, private recipeService: RecipeService,
               private router: Router,
@@ -32,9 +36,17 @@ export class RecipeEditComponent implements OnInit {
 
   onSubmit () {
     if (this.isEditMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      // this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+      this.store.dispatch(new RecipesAction.UpdateRecipe({index: this.id, recipe: this.recipeForm.value}));
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      // this.recipeService.addRecipe(this.recipeForm.value);
+      this.store.dispatch(new RecipesAction.AddRecipe(this.recipeForm.value));
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.storeSub) {
+      this.storeSub.unsubscribe();
     }
   }
 
@@ -54,7 +66,7 @@ export class RecipeEditComponent implements OnInit {
 
     if (this.isEditMode) {
       // const recipe = this.recipeService.getRecipe(this.id);
-      this.store.select('recipes').pipe(
+      this.storeSub = this.store.select('recipes').pipe(
         map(recipeState => {
           return recipeState.recipes.find((recipe, index) => {
             return index === this.id;
