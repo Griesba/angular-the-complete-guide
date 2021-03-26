@@ -22,7 +22,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   private storeSub: Subscription;
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipeService,
+  constructor(private route: ActivatedRoute,
+              // private recipeService: RecipeService,
               private router: Router,
               private store: Store<fromApp.AppState>) { }
 

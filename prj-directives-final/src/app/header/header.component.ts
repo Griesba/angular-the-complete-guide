@@ -30,7 +30,8 @@ export class HeaderComponent implements OnInit {
   }
 
   storeData() {
-    this.dataStorageService.createRecipes();
+    // this.dataStorageService.createRecipes();
+    this.store.dispatch(new fromRecipe.StoreRecipe());
   }
 
   fetchData() {
