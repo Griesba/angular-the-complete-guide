@@ -38,7 +38,7 @@ import {RecipeEffects} from './recipes/store/recipe.effects';
     // PlaceholderDirective
   ],
   imports: [
-    BrowserModule, // BrowserModule is used only once, in other module use CommonModule
+    BrowserModule.withServerTransition({ appId: 'serverApp' }), // BrowserModule is used only once, in other module use CommonModule
     FormsModule,
     // registering shoppingListReducer in the StoreModule with key shoppingList
     StoreModule.forRoot(fromApp.appReducer),

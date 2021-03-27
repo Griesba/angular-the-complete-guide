@@ -39,5 +39,5 @@ find the name of the project in angular file under 'projects' block
 to prepare the build for dist folder
 run `npm run build:ssr`
 
-to start the server
+to start the as server (display page source to see the change)
 run: `serve:ssr`
