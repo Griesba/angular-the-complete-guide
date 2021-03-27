@@ -29,3 +29,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## @ngrx/effects 
 Effects are an RxJS powered side effect model for Store. Effects use streams to provide new sources of actions to reduce state based on external interactions such as network requests, web socket messages and time-based events.
+
+
+## Adding angular universal 
+run : `ng add @nguniversal/express-engine --clientProject <the name of the project>`
+will allow you the see the pre-rendering of the app on a server
+find the name of the project in angular file under 'projects' block
+
+to prepare the build for dist folder
+run `npm run build:ssr`
+
+to start the server
+run: `serve:ssr`
