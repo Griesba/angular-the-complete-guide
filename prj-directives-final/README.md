@@ -41,3 +41,7 @@ run `npm run build:ssr`
 
 to start the as server (display page source to see the change)
 run: `serve:ssr`
+
+## Adding Nest
+server side framework, can be used to build an API, use for pre-rendering your app like we did with angular universal manually 
+run `ng add @nestjs/ng-universal`
