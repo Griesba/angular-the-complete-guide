@@ -132,4 +132,12 @@ export class AppComponent {
       this.list.splice(index, 1);
     }
   }
+
+  animationStarted(event) {
+    console.log(event);
+  }
+
+  animationDone(event) {
+    console.log(event);
+  }
 }
