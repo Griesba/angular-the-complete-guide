@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {animate, group, keyframes, state, style, transition, trigger} from '@angular/animations';
 import {sanitizeIdentifier} from '@angular/compiler';
 
 @Component({
@@ -96,10 +96,15 @@ import {sanitizeIdentifier} from '@angular/compiler';
 
       ]),
       transition('* => void', [
-        animate(300, style({
-          transform: 'translateX(100px)',
-          opacity: 0
-        }))
+        group([
+          animate(300, style({
+            color: 'red'
+          })),
+          animate(500, style({
+            transform: 'translateX(100px)',
+            opacity: 0
+          }))
+        ])
       ])
     ])
   ]
