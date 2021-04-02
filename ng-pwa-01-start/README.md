@@ -26,6 +26,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
+## Adding pwa 
+`ng add @angular/pwa`
+
 ## Install lightweight server
 `npm install -g http-serve`
 Start server on port 8081: `http-server -p 8081`
