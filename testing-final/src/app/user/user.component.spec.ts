@@ -72,7 +72,7 @@ describe('Component: User', () => {
     let spy = spyOn(dataService, 'getDetails')
       .and.returnValue(Promise.resolve('Data'));
     fixture.detectChanges();
-    tick();
+    tick(); // wait async task to finish
     expect(app.data).toBe('Data');
 
   }));
